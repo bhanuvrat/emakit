@@ -46,6 +46,14 @@
   (add-to-list 'lsp-file-watch-ignored match))
 
 (with-eval-after-load 'lsp-mode
+
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection '("nextls" "--stdio" ))
+		    :multi-root t
+		    ;; :initialization-options '(:experimental (:completions (:enable t))) ;; Enable the experimental completion mode
+		    :activation-fn (lsp-activate-on "elixir")
+		    :server-id 'next-ls))
+
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
 ;; https://github.com/emacs-lsp/lsp-treemacs
